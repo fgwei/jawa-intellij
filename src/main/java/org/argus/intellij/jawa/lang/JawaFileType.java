@@ -29,7 +29,7 @@ public class JawaFileType extends LanguageFileType implements FileTypeIdentifiab
     public static final JawaFileType INSTANCE = new JawaFileType();
     public static final Language JAWA_LANGUAGE = JawaLanguage.Instance;
     @NonNls
-    public static final String DEFAULT_EXTENSION = "jawa";
+    static final String DEFAULT_EXTENSION = "jawa";
 
     private JawaFileType() {
         super(JawaLanguage.Instance);

@@ -331,7 +331,13 @@ public abstract class JawaReferenceExpressionPsiElement extends JawaExpressionPs
     @NotNull
     private JavaResolveResult[] resolve(IElementType parentType, @NotNull PsiFile containingFile) {
         if (parentType == JawaElementTypes.CALL_STATEMENT) {
-            return resolveToMethod(containingFile);
+            return resolveToMethod(containingFile, (JawaCallStatement) getParent());
+        }
+        if (getNode().getElementType() == JawaElementTypes.SIGNATURE_SYMBOL) {
+            PsiElement parpar = getParent().getParent();
+            if(parpar != null && parpar.getNode().getElementType() == JawaElementTypes.CALL_STATEMENT) {
+                return resolveToMethod(containingFile, (JawaCallStatement) parpar);
+            }
         }
         if (getNode().getElementType() == JawaElementTypes.FIELD_NAME_SYMBOL || getNode().getElementType() == JawaElementTypes.STATIC_FIELD_NAME_SYMBOL) {
             return resolveToField(containingFile);
@@ -340,8 +346,7 @@ public abstract class JawaReferenceExpressionPsiElement extends JawaExpressionPs
     }
 
     @NotNull
-    private JavaResolveResult[] resolveToMethod(@NotNull PsiFile containingFile) {
-        final JawaCallStatement methodCall = (JawaCallStatement)getParent();
+    private JavaResolveResult[] resolveToMethod(@NotNull PsiFile containingFile, @NotNull JawaCallStatement methodCall) {
         final MethodResolverProcessor processor = new MethodResolverProcessor(methodCall, containingFile);
         try {
             String methodName = methodCall.getSignatureAnnotation().getSignatureSymbol().getSignature().methodName();

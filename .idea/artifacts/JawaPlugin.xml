@@ -16,12 +16,11 @@
           <element id="library" level="project" name="sbt: org.jetbrains:compiler-interface-sources:1.0.0:jar" />
           <element id="library" level="project" name="sbt: org.jetbrains:incremental-compiler:1.0.0:jar" />
           <element id="library" level="project" name="sbt: org.jetbrains:jline:1.0.0:jar" />
+          <element id="library" level="project" name="sbt: org.ow2.asm:asm-all:5.2:jar" />
+          <element id="library" level="project" name="sbt: org.jetbrains:nailgun-patched:1.0.0:jar" />
         </element>
         <element id="archive" name="compiler-settings.jar">
           <element id="module-output" name="compiler-settings" />
-        </element>
-        <element id="archive" name="jawa-nailgun-runner.jar">
-          <element id="module-output" name="nailgun-runners" />
         </element>
         <element id="archive" name="jawa-plugin.jar">
           <element id="module-output" name="jawa-intellij" />
@@ -37,8 +36,12 @@
         <element id="library" level="project" name="sbt: org.apache.commons:commons-lang3:3.5:jar" />
         <element id="library" level="project" name="sbt: org.jgrapht:jgrapht-core:1.0.1:jar" />
         <element id="library" level="project" name="sbt: org.jgrapht:jgrapht-ext:1.0.1:jar" />
-        <element id="library" level="project" name="sbt: org.ow2.asm:asm-all:5.2:jar" />
         <element id="library" level="project" name="sbt: org.tinyjee.jgraphx:jgraphx:2.0.0.1:jar" />
+        <element id="library" level="project" name="sbt: org.scala-lang:scala-library:2.12.6:jar" />
+        <element id="library" level="project" name="sbt: org.scala-lang:scala-reflect:2.12.6:jar" />
+        <element id="archive" name="java-nailgun-runner.jar">
+          <element id="module-output" name="nailgun-runners" />
+        </element>
       </element>
     </root>
   </artifact>
