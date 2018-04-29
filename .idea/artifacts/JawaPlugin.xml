@@ -1,0 +1,45 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="JawaPlugin">
+    <output-path>$PROJECT_DIR$/out/plugin/Jawa</output-path>
+    <properties id="ant-postprocessing">
+      <options enabled="true">
+        <file>file://$PROJECT_DIR$/buildutils.xml</file>
+        <target>rename.scala.library</target>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="lib">
+        <element id="directory" name="jc">
+          <element id="archive" name="jawa-jc-plugin.jar">
+            <element id="module-output" name="jc-plugin" />
+          </element>
+          <element id="library" level="project" name="sbt: org.jetbrains:compiler-interface-sources:1.0.0:jar" />
+          <element id="library" level="project" name="sbt: org.jetbrains:incremental-compiler:1.0.0:jar" />
+          <element id="library" level="project" name="sbt: org.jetbrains:jline:1.0.0:jar" />
+        </element>
+        <element id="archive" name="compiler-settings.jar">
+          <element id="module-output" name="compiler-settings" />
+        </element>
+        <element id="archive" name="jawa-nailgun-runner.jar">
+          <element id="module-output" name="nailgun-runners" />
+        </element>
+        <element id="archive" name="jawa-plugin.jar">
+          <element id="module-output" name="jawa-intellij" />
+        </element>
+        <element id="library" level="project" name="sbt: com.github.arguslab:jawa_2.12:3.1.3-SNAPSHOT:jar" />
+        <element id="library" level="project" name="sbt: com.github.javaparser:javaparser-core:3.4.0:jar" />
+        <element id="library" level="project" name="sbt: com.google.code.findbugs:jsr305:3.0.2:jar" />
+        <element id="library" level="project" name="sbt: com.google.guava:guava:21.0:jar" />
+        <element id="library" level="project" name="sbt: jgraph:jgraph:5.13.0.0:jar" />
+        <element id="library" level="project" name="sbt: org.antlr:antlr-runtime:3.5.2:jar" />
+        <element id="library" level="project" name="sbt: org.antlr:antlr4-runtime:4.7:jar" />
+        <element id="library" level="project" name="sbt: org.antlr:ST4:4.0.8:jar" />
+        <element id="library" level="project" name="sbt: org.apache.commons:commons-lang3:3.5:jar" />
+        <element id="library" level="project" name="sbt: org.jgrapht:jgrapht-core:1.0.1:jar" />
+        <element id="library" level="project" name="sbt: org.jgrapht:jgrapht-ext:1.0.1:jar" />
+        <element id="library" level="project" name="sbt: org.ow2.asm:asm-all:5.2:jar" />
+        <element id="library" level="project" name="sbt: org.tinyjee.jgraphx:jgraphx:2.0.0.1:jar" />
+      </element>
+    </root>
+  </artifact>
+</component>

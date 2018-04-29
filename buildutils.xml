@@ -1,0 +1,78 @@
+<!--
+  ~ Copyright (c) 2016. Fengguo (Hugo) Wei and others.
+  ~ All rights reserved. This program and the accompanying materials
+  ~ are made available under the terms of the Eclipse Public License v1.0
+  ~ which accompanies this distribution, and is available at
+  ~ http://www.eclipse.org/legal/epl-v10.html
+  ~
+  ~ Detailed contributors are listed in the CONTRIBUTOR.md
+  -->
+
+<project name="Production build" default="idea.postbuild">
+
+    <target name="rename.scala.library">
+        <move todir="out/plugin/Jawa/lib">
+            <fileset dir="out/plugin/Jawa/lib">
+                <include name="scala-library*.jar"/>
+            </fileset>
+            <mapper type="glob" from="*" to="scala-library.jar"/>
+        </move>
+    </target>
+
+    <target name="rename.compiler-interface-sources">
+        <move todir="out/plugin/Jawa/lib/jc">
+            <fileset dir="out/plugin/Jawa/lib/jc">
+                <include name="compiler-interface-sources*.jar"/>
+            </fileset>
+            <mapper type="glob" from="*" to="compiler-interface-sources.jar"/>
+        </move>
+    </target>
+
+    <target name="rename.incremental-compiler">
+        <move todir="out/plugin/Jawa/lib/jc">
+            <fileset dir="out/plugin/Jawa/lib/jc">
+                <include name="incremental-compiler*.jar"/>
+            </fileset>
+            <mapper type="glob" from="*" to="incremental-compiler.jar"/>
+        </move>
+    </target>
+
+    <target name="rename.jline">
+        <move todir="out/plugin/Jawa/lib/jc">
+            <fileset dir="out/plugin/Jawa/lib/jc">
+                <include name="jline*.jar"/>
+            </fileset>
+            <mapper type="glob" from="*" to="jline.jar"/>
+        </move>
+    </target>
+
+    <target name="rename.nailgun">
+        <move todir="out/plugin/Jawa/lib/jc">
+            <fileset dir="out/plugin/Jawa/lib/jc">
+                <include name="nailgun*.jar"/>
+            </fileset>
+            <mapper type="glob" from="*" to="nailgun.jar"/>
+        </move>
+    </target>
+
+    <target name="rename.jawa">
+        <move todir="out/plugin/Jawa/lib">
+            <fileset dir="out/plugin/Jawa/lib">
+                <include name="jawa*.jar"/>
+            </fileset>
+            <mapper type="glob" from="*" to="jawa.jar"/>
+        </move>
+    </target>
+
+    <target name="rename.asm-all">
+        <move todir="out/plugin/Jawa/lib/jc">
+            <fileset dir="out/plugin/Jawa/lib/jc">
+                <include name="asm-all*.jar"/>
+            </fileset>
+            <mapper type="glob" from="*" to="asm-all.jar"/>
+        </move>
+    </target>
+
+    <target name="idea.postbuild"
+            depends="rename.scala.library,rename.compiler-interface-sources,rename.incremental-compiler,rename.jline,rename.nailgun,rename.asm-all"/>
+</project>

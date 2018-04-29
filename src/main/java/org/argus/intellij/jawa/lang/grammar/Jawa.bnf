@@ -1,0 +1,331 @@
+/*
+ * Copyright (c) 2018. Fengguo (Hugo) Wei and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * Detailed contributors are listed in the CONTRIBUTOR.md
+ */
+
+{
+  parserClass="org.argus.intellij.jawa.lang.parser.JawaParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Jawa"
+  psiImplClassSuffix="Impl"
+  psiPackage="org.argus.intellij.jawa.lang.psi"
+  psiImplPackage="org.argus.intellij.jawa.lang.psi.impl"
+
+  elementTypeHolderClass="org.argus.intellij.jawa.lang.psi.JawaElementTypes"
+  elementTypeClass="org.argus.intellij.jawa.lang.psi.JawaElementType"
+  tokenTypeClass="org.argus.intellij.jawa.lang.psi.JawaTokenType"
+
+  elementTypeFactory="org.argus.intellij.jawa.lang.parser.JawaElementTypeFactory.getElementType"
+
+  psiImplUtilClass="org.argus.intellij.jawa.lang.psi.impl.JawaPsiImplUtil"
+
+  tokens = [
+    SEMI=';'
+    COMMA=','
+    AT='@'
+    HAT='^'
+    BAR='|'
+    ASSIGN_OP=':='
+    ARROW='=>'
+    DOT='.'
+    RANGE='..'
+
+    LBRACE='{'
+    RBRACE='}'
+    LBRACKET='['
+    RBRACKET=']'
+    LPAREN='('
+    RPAREN=')'
+
+    CLASS_OR_INTERFACE='record'
+    EXTENDS_AND_IMPLEMENTS='extends'
+    STATIC_FIELD='global'
+    METHOD='procedure'
+    CALL='call'
+    THROW='throw'
+    IF='if'
+    THEN='then'
+    GOTO='goto'
+    SWITCH='switch'
+    ELSE='else'
+    RETURN='return'
+    MONITOR_ENTER='monitorenter'
+    MONITOR_EXIT='monitorexit'
+    NEW='new'
+    EXCEPTION='Exception'
+    CONST_CLASS='constclass'
+    LENGTH='length'
+    INSTANCEOF='instanceof'
+    NULL_LITERAL='null'
+    CATCH='catch'
+    OWNER_KEY='@owner'
+    TYPE_KEY='@type'
+    CLASS_DESCRIPTOR_KEY='@classDescriptor'
+    SIGNATURE_KEY='@signature'
+    KIND_KEY='@kind'
+    ACCESS_FLAG_KEY='@AccessFlag'
+    MONITOR_ENTER_KEY='@monitorenter'
+    MONITOR_EXIT_KEY='@monitorexit'
+
+    fcmpl='fcmpl'
+    fcmpg='fcmpg'
+    dcmpl='dcmpl'
+    dcmpg='dcmpg'
+    lcmp='lcmp'
+
+    ADD='+'
+    SUB='-'
+    MUL='*'
+    DIV='/'
+    REM='%%'
+    AND='^&'
+    OR='^|'
+    XOR='^~'
+    SHL='^<'
+    SHR='^>'
+    USHR='^>>'
+
+    EQ='=='
+    NQ='!='
+    LT='<'
+    GE='>='
+    GT='>'
+    LE='<='
+    NOT='~'
+
+    ID='regexp:(\p{Alpha}([\w]|[$])*)'
+    APOSTROPHE_ID="regexp:(`[^`@]+`)"
+    STATIC_ID="regexp:(`@@[^`@]+`)"
+    LOCATION_ID="regexp:#([\w]+\.)?"
+    number='regexp:\d+(\.\d*)?'
+    STRING_LITERAL="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+    ANNOTATION_KEY="regexp:(@[\w]+)"
+  ]
+
+  implements("ClassOrInterfaceDeclaration")="org.argus.intellij.jawa.lang.psi.api.toplevel.JawaTypeDefinition"
+  mixin("ClassOrInterfaceDeclaration")="org.argus.intellij.jawa.lang.psi.mixins.JawaClassOrInterfaceDeclarationImplMixin"
+  stubClass("ClassOrInterfaceDeclaration")="org.argus.intellij.jawa.lang.psi.stubs.JawaClassOrInterfaceStub"
+
+  implements("ExtendsAndImplementsClause")="org.argus.intellij.jawa.lang.psi.api.base.JawaPsiReferenceList"
+  mixin("ExtendsAndImplementsClause")="org.argus.intellij.jawa.lang.psi.mixins.JawaExtendsAndImplementsClauseImplMixin"
+  stubClass("ExtendsAndImplementsClause")="org.argus.intellij.jawa.lang.psi.stubs.JawaExtendsAndImplementsClauseStub"
+
+  implements("FieldDeclaration")="org.argus.intellij.jawa.lang.psi.api.base.JawaPsiField"
+  mixin("FieldDeclaration")="org.argus.intellij.jawa.lang.psi.mixins.JawaFieldDeclarationImplMixin"
+  stubClass("FieldDeclaration")="org.argus.intellij.jawa.lang.psi.stubs.JawaFieldStub"
+
+  implements("JwType")="org.argus.intellij.jawa.lang.psi.api.base.JawaTypeElement"
+  mixin("JwType")="org.argus.intellij.jawa.lang.psi.mixins.JawaJwTypeImplMixin"
+  stubClass("JwType")="org.argus.intellij.jawa.lang.psi.stubs.JawaJwTypeStub"
+
+  implements("TypeSymbol")="org.argus.intellij.jawa.lang.psi.api.base.JawaReference"
+  mixin("TypeSymbol")="org.argus.intellij.jawa.lang.psi.mixins.JawaTypeSymbolImplMixin"
+  stubClass("TypeSymbol")="org.argus.intellij.jawa.lang.psi.stubs.JawaTypeSymbolStub"
+
+  implements("MethodDeclaration")="org.argus.intellij.jawa.lang.psi.api.base.JawaPsiMethod"
+  mixin("MethodDeclaration")="org.argus.intellij.jawa.lang.psi.mixins.JawaMethodDeclarationImplMixin"
+  stubClass("MethodDeclaration")="org.argus.intellij.jawa.lang.psi.stubs.JawaMethodStub"
+
+  implements("AccessFlagAnnotation")="org.argus.intellij.jawa.lang.psi.api.base.JawaModifierList"
+  mixin("AccessFlagAnnotation")="org.argus.intellij.jawa.lang.psi.mixins.JawaAccessFlagAnnotationImplMixin"
+  stubClass("AccessFlagAnnotation")="org.argus.intellij.jawa.lang.psi.stubs.JawaAccessFlagStub"
+
+  implements("ParamClause")="org.argus.intellij.jawa.lang.psi.api.base.JawaParameterList"
+  mixin("ParamClause")="org.argus.intellij.jawa.lang.psi.mixins.JawaParamClauseImplMixin"
+  stubClass("ParamClause")="org.argus.intellij.jawa.lang.psi.stubs.JawaParamClauseStub"
+
+  implements("Param")="org.argus.intellij.jawa.lang.psi.api.base.JawaParameter"
+  mixin("Param")="org.argus.intellij.jawa.lang.psi.mixins.JawaParamImplMixin"
+  stubClass("Param")="org.argus.intellij.jawa.lang.psi.stubs.JawaParamStub"
+
+  implements("JwBody")="org.argus.intellij.jawa.lang.psi.api.base.JawaCodeBlock"
+  mixin("JwBody")="org.argus.intellij.jawa.lang.psi.mixins.JawaJwBodyImplMixin"
+
+  implements("Location")="org.argus.intellij.jawa.lang.psi.api.base.JawaJwStatement"
+  mixin("Location")="org.argus.intellij.jawa.lang.psi.mixins.JawaLocationImplMixin"
+
+  implements("CallStatement")="org.argus.intellij.jawa.lang.psi.api.expr.JawaMethodCallExpression"
+  mixin("CallStatement")="org.argus.intellij.jawa.lang.psi.mixins.JawaCallStatementImplMixin"
+
+  implements("ArgClause")="org.argus.intellij.jawa.lang.psi.api.expr.JawaExpressionList"
+  mixin("ArgClause")="org.argus.intellij.jawa.lang.psi.mixins.JawaArgClauseImplMixin"
+
+  implements("VarSymbol")="org.argus.intellij.jawa.lang.psi.api.expr.JawaReferenceExpression"
+  mixin("VarSymbol")="org.argus.intellij.jawa.lang.psi.mixins.JawaVarSymbolImplMixin"
+
+  implements("LocalVarDeclaration")="org.argus.intellij.jawa.lang.psi.api.base.JawaLocalVariable"
+  mixin("LocalVarDeclaration")="org.argus.intellij.jawa.lang.psi.mixins.JawaLocalVarDeclarationImplMixin"
+
+  implements("MethodNameSymbol")="org.argus.intellij.jawa.lang.psi.api.expr.JawaReferenceExpression"
+  mixin("MethodNameSymbol")="org.argus.intellij.jawa.lang.psi.mixins.JawaMethodNameSymbolImplMixin"
+
+  implements("LocationDefSymbol")="org.argus.intellij.jawa.lang.psi.api.base.JawaLocalVariable"
+  mixin("LocationDefSymbol")="org.argus.intellij.jawa.lang.psi.mixins.JawaLocationDefSymbolImplMixin"
+
+  implements("LocationSymbol")="org.argus.intellij.jawa.lang.psi.api.expr.JawaReferenceExpression"
+  mixin("LocationSymbol")="org.argus.intellij.jawa.lang.psi.mixins.JawaLocationSymbolImplMixin"
+
+  implements("FieldNameSymbol")="org.argus.intellij.jawa.lang.psi.api.expr.JawaReferenceExpression"
+  mixin("FieldNameSymbol")="org.argus.intellij.jawa.lang.psi.mixins.JawaFieldNameSymbolImplMixin"
+
+  implements("StaticFieldNameSymbol")="org.argus.intellij.jawa.lang.psi.api.expr.JawaReferenceExpression"
+  mixin("StaticFieldNameSymbol")="org.argus.intellij.jawa.lang.psi.mixins.JawaStaticFieldNameSymbolImplMixin"
+}
+
+CompilationUnit ::= ClassOrInterfaceDeclaration*
+
+ClassOrInterfaceDeclaration ::= 'record' TypeDefSymbol KindAnnotation AccessFlagAnnotation ExtendsAndImplementsClause? InstanceFieldDeclarationBlock StaticFieldDeclaration* MethodDeclaration*
+
+Annotation ::= TypeAnnotation | SignatureAnnotation | KindAnnotation | AccessFlagAnnotation | DefaultAnnotation
+TypeAnnotation ::= ('@owner'|'@type'|'@classDescriptor') TypeExpression
+SignatureAnnotation ::= '@signature' SignatureSymbol
+KindAnnotation ::= '@kind' ID
+AccessFlagAnnotation ::= '@AccessFlag' ID? {methods=[getModifiers]}
+DefaultAnnotation ::= ANNOTATION_KEY (ID|APOSTROPHE_ID)? {methods=[getKey getValue]}
+
+ExtendsAndImplementsClause ::= 'extends' ExtendAndImplement (',' ExtendAndImplement)* {pin=2}
+ExtendAndImplement ::= TypeSymbol KindAnnotation {methods=[isImplements]}
+
+InstanceFieldDeclarationBlock ::= '{' InstanceFieldDeclaration* '}'
+InstanceFieldDeclaration ::= FieldDeclaration ';'
+
+StaticFieldDeclaration ::= 'global' FieldDeclaration ';'
+
+FieldDeclaration ::= JwType (FieldDefSymbol|StaticFieldDefSymbol) AccessFlagAnnotation {methods=[getFQN]}
+
+JwType ::= TypeSymbol TypeFragment* {methods=[getJawaType]}
+TypeFragment ::= '[' ']'
+TypeFragmentWithInit ::= '[' VarSymbol (',' VarSymbol)* ']'
+
+MethodDeclaration ::= 'procedure' JwType MethodDefSymbol ParamClause TypeAnnotation SignatureAnnotation AccessFlagAnnotation JwBody
+
+ParamClause ::= '(' (Param (',' Param)*)? ')'
+Param ::= JwType VarDefSymbol Annotation*
+
+JwBody ::= '{' LocalVarDeclaration* Location* CatchClause* '}'
+
+LocalVarDeclaration ::= JwType? VarDefSymbol ';'
+
+Location ::= LocationDefSymbol Statement? ';'?
+
+Statement ::= CallStatement
+              |ThrowStatement
+              |IfStatement
+              |SwitchStatement
+              |ReturnStatement
+              |GotoStatement
+              |MonitorStatement
+              |AssignmentStatement
+              |Annotation*
+
+CallStatement ::= 'call' CallLhs? MethodNameSymbol ArgClause SignatureAnnotation TypeAnnotation KindAnnotation
+CallLhs ::= VarSymbol ':=' {pin=2}
+ArgClause ::= '(' (VarSymbol (',' VarSymbol)*)? ')' {pin=3}
+
+ThrowStatement ::= 'throw' VarSymbol
+
+IfStatement ::= 'if' CondBinaryExpression 'then' 'goto' LocationSymbol
+
+SwitchStatement ::= 'switch' VarSymbol SwitchCase* SwitchDefaultCase?
+SwitchCase ::= '|' NUMBER_LITERAL '=>' 'goto' LocationSymbol {pin=2}
+SwitchDefaultCase ::= '|' 'else' '=>' 'goto' LocationSymbol {pin=2}
+
+ReturnStatement ::= 'return' VarSymbol? KindAnnotation?
+
+GotoStatement ::= 'goto' LocationSymbol
+
+MonitorStatement ::= (MONITOR_ENTER_KEY|MONITOR_EXIT_KEY) VarSymbol {pin=2}
+
+AssignmentStatement ::= Expression_Lhs ':=' Expression_Rhs KindAnnotation? TypeAnnotation?
+
+Expression_Lhs ::= AccessExpression
+                   |IndexingExpression
+                   |NameExpression
+
+Expression_Rhs ::= NewExpression
+                   |CmpExpression
+                   |ExceptionExpression
+                   |ConstClassExpression
+                   |LengthExpression
+                   |InstanceofExpression
+                   |NullExpression
+                   |TupleExpression
+                   |CastExpression
+                   |LiteralExpression
+                   |UnaryExpression
+                   |AccessExpression
+                   |IndexingExpression
+                   |BinaryExpression
+                   |NameExpression
+
+NameExpression ::= VarSymbol|StaticFieldNameSymbol
+
+NewExpression ::= 'new' TypeSymbol TypeFragmentWithInit*
+
+CMP ::= 'fcmpl' | 'fcmpg' | 'dcmpl' | 'dcmpg' | 'lcmp'
+
+CmpExpression ::= CMP '(' VarSymbol ',' VarSymbol ')'
+
+ExceptionExpression ::= 'Exception'
+
+ConstClassExpression ::= 'constclass' TypeAnnotation
+
+TypeExpression ::= '^' JwType
+
+LengthExpression ::= 'length' ANNOTATION_KEY VarSymbol
+
+InstanceofExpression ::= 'instanceof' ANNOTATION_KEY VarSymbol TypeAnnotation
+
+NullExpression ::= 'null' TypeAnnotation
+
+TupleExpression ::= '(' (NUMBER_LITERAL (',' NUMBER_LITERAL)*)? ')'
+
+CastExpression ::= '(' JwType ')' VarSymbol
+
+LiteralExpression ::= (NUMBER_LITERAL|STRING_LITERAL|'null')
+
+private unary_op ::= '-' | '~'
+
+UnaryExpression ::= unary_op VarSymbol
+
+AccessExpression ::= VarSymbol '.' FieldNameSymbol
+
+IndexingExpression ::= VarSymbol '[' (VarSymbol|NUMBER_LITERAL) ']' {pin=2}
+
+private binary_op ::= '+' | '-' | '*' | '/' | '%%' | '^&' | '^|' | '^~' | '^<' | '^>' | '^>>'
+
+BinaryExpression ::= VarSymbol binary_op (VarSymbol|NUMBER_LITERAL)
+
+private cond_binary_op ::= '!=' | '==' | '>' | '<' | '>=' | '<='
+
+CondBinaryExpression ::= VarSymbol cond_binary_op (VarSymbol|NUMBER_LITERAL|'null')
+
+CatchClause ::= 'catch' JwType CatchRange 'goto' LocationSymbol ';'
+CatchRange ::= AT '[' LocationSymbol '..' LocationSymbol ']' {pin=2}
+
+TypeDefSymbol ::= APOSTROPHE_ID {methods=[getJawaType]}
+TypeSymbol ::= APOSTROPHE_ID {methods=[getJawaType]}
+
+VarDefSymbol ::= ID | APOSTROPHE_ID {methods=[getName]}
+VarSymbol ::= ID | APOSTROPHE_ID {methods=[getName]}
+
+FieldDefSymbol ::= APOSTROPHE_ID
+FieldNameSymbol ::= APOSTROPHE_ID {methods=[getFQN]}
+StaticFieldDefSymbol ::= STATIC_ID
+StaticFieldNameSymbol ::= STATIC_ID {methods=[getFQN]}
+
+MethodDefSymbol ::= APOSTROPHE_ID
+MethodNameSymbol ::= APOSTROPHE_ID
+SignatureSymbol ::= APOSTROPHE_ID {methods=[getSignature]}
+
+LocationDefSymbol ::= LOCATION_ID
+LocationSymbol ::= ID
+
+NUMBER_LITERAL ::= number ['i'|'I'|'l'|'L'|'f'|'F'|'d'|'D']

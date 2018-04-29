@@ -1,0 +1,108 @@
+<!--
+  ~ Copyright (c) 2018. Fengguo (Hugo) Wei and others.
+  ~ All rights reserved. This program and the accompanying materials
+  ~ are made available under the terms of the Eclipse Public License v1.0
+  ~ which accompanies this distribution, and is available at
+  ~ https://www.eclipse.org/legal/epl-2.0/
+  ~
+  ~ Detailed contributors are listed in the CONTRIBUTOR.md
+  -->
+
+<idea-plugin>
+  <id>org.argus.intellij</id>
+  <name>Jawa</name>
+  <description>Jawa plugin provides Jawa language support.</description>
+  <version>1.0.0</version>
+  <vendor url="http://fgwei.arguslab.org/">Argus Laboratory: Fengguo (Hugo) Wei</vendor>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="173.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!--<depends>com.intellij.modules.lang</depends>-->
+
+  <resource-bundle xmlns="">org.argus.intellij.jawa.JawaBundle</resource-bundle>
+
+  <extensionPoints>
+    <extensionPoint name="serverWidgetEP" interface="org.argus.intellij.jawa.compiler.ServerWidgetEP"/>
+  </extensionPoints>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <fileTypeFactory implementation="org.argus.intellij.jawa.lang.JawaFileTypeFactory"/>
+    <compileServer.plugin classpath="scala-library.jar;compiler-settings.jar;jawa.jar;jc/asm-all.jar;jc/nailgun.jar;jc/jawa-jc-plugin.jar;jc/incremental-compiler.jar;jc/jline.jar"/>
+    <lang.parserDefinition language="Jawa" implementationClass="org.argus.intellij.jawa.lang.parser.JawaParserDefinition"/>
+    <lang.syntaxHighlighterFactory language="Jawa" implementationClass="org.argus.intellij.jawa.highlighter.JawaSyntaxHighlighterFactory"/>
+    <colorSettingsPage implementation="org.argus.intellij.jawa.highlighter.JawaColorSettingsPage"/>
+    <annotator language="Jawa" implementationClass="org.argus.intellij.jawa.annotator.JawaHighlightingAnnotator"/>
+    <lang.commenter language="Jawa" implementationClass="org.argus.intellij.jawa.commenter.JawaCommenter"/>
+    <lang.foldingBuilder language="Jawa" implementationClass="org.argus.intellij.jawa.folding.JawaFoldingBuilder"/>
+    <lang.psiStructureViewFactory language="Jawa" implementationClass="org.argus.intellij.jawa.lang.structureview.JawaStructureViewFactory"/>
+    <codeInsight.lineMarkerProvider language="Jawa" implementationClass="org.argus.intellij.jawa.annotator.gutter.JawaLineMarkerProvider"/>
+    <codeInsight.overrideMethod language="Jawa" implementationClass="com.intellij.codeInsight.generation.JavaOverrideMethodsHandler"/>
+    <codeInsight.implementMethod language="Jawa" implementationClass="com.intellij.codeInsight.generation.JavaImplementMethodsHandler"/>
+    <codeInsight.delegateMethods language="Jawa" implementationClass="com.intellij.codeInsight.generation.GenerateDelegateHandler"/>
+    <codeInsight.gotoSuper language="Jawa" implementationClass="com.intellij.codeInsight.navigation.JavaGotoSuperHandler"/>
+
+    <stubElementTypeHolder class="org.argus.intellij.jawa.lang.psi.stubs.JawaStubElementTypes"/>
+
+    <callHierarchyProvider language="Jawa" implementationClass="org.argus.intellij.jawa.hierarchy.JawaCallHierarchyProvider"/>
+    <methodHierarchyProvider language="Jawa" implementationClass="org.argus.intellij.jawa.hierarchy.JawaMethodHierarchyProvider"/>
+    <typeHierarchyProvider language="Jawa" implementationClass="org.argus.intellij.jawa.hierarchy.JawaTypeHierarchyProvider"/>
+
+    <!--<findUsagesHandlerFactory implementation="com.intellij.find.findUsages.JavaFindUsagesHandlerFactory" id="jawa"-->
+                              <!--order="first"/>-->
+    <targetElementEvaluator language="Jawa" implementationClass="com.intellij.codeInsight.JavaTargetElementEvaluator"/>
+
+    <applicationConfigurable groupId="language" displayName="Jawa Compile Server" instance="org.argus.intellij.jawa.compiler.JawaCompileServerForm"/>
+
+    <applicationService serviceInterface="org.argus.intellij.jawa.compiler.JawaCompileServerSettings"
+                        serviceImplementation="org.argus.intellij.jawa.compiler.JawaCompileServerSettings"/>
+    <!--<projectService serviceImplementation="org.jetbrains.plugins.scala.project.settings.ScalaCompilerConfiguration"/>-->
+    <!--<projectConfigurable id="Jawa Compiler" displayName="Jawa Compiler" parentId="project.propCompiler"-->
+                         <!--instance="org.jetbrains.plugins.scala.project.settings.ScalaCompilerConfigurable" />-->
+    <lang.documentationProvider language="Jawa" implementationClass="com.intellij.lang.java.JavaDocumentationProvider"/>
+
+    <internalFileTemplate name="Jawa Class"/>
+    <internalFileTemplate name="Jawa Interface"/>
+    <defaultTemplatePropertiesProvider implementation="org.argus.intellij.jawa.actions.JawaDefaultTemplatePropertiesProvider"/>
+
+    <xdebugger.breakpointType implementation="org.argus.intellij.jawa.debugger.breakpoints.JawaLineBreakpointType"/>
+    <debugger.javaBreakpointHandlerFactory implementation="org.argus.intellij.jawa.debugger.breakpoints.JawaBreakpointHandlerFactory"/>
+    <debuggerEditorTextProvider language="Jawa" implementationClass="com.intellij.debugger.impl.JavaEditorTextProviderImpl"/>
+
+  </extensions>
+
+  <application-components>
+    <component>
+      <interface-class>org.argus.intellij.jawa.util.JawaToolsFactory</interface-class>
+      <implementation-class>org.argus.intellij.jawa.util.JawaToolsFactoryImpl</implementation-class>
+    </component>
+    <component>
+      <implementation-class>org.argus.intellij.jawa.JawaLoader</implementation-class>
+    </component>
+    <component>
+      <implementation-class>org.argus.intellij.jawa.compiler.JcCompileServerLauncher</implementation-class>
+    </component>
+  </application-components>
+
+  <project-components>
+    <component>
+      <implementation-class>org.argus.intellij.jawa.compiler.JcServerMediator</implementation-class>
+    </component>
+    <component>
+      <implementation-class>org.argus.intellij.jawa.project.JawaProjectEvents</implementation-class>
+    </component>
+    <component>
+      <implementation-class>org.argus.intellij.jawa.compiler.JcCompileServerManager</implementation-class>
+    </component>
+  </project-components>
+
+  <actions>
+    <action id="Jawa.NewClass" class="org.argus.intellij.jawa.actions.NewJawaClassAction"
+            text="Jawa Class" description="Create new Jawa class">
+      <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewGroup1"/>
+    </action>
+  </actions>
+
+</idea-plugin>
