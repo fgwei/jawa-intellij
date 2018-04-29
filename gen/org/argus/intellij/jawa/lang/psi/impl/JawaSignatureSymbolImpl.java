@@ -8,11 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.argus.intellij.jawa.lang.psi.JawaElementTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import org.argus.intellij.jawa.lang.psi.mixins.JawaSignatureSymbolImplMixin;
 import org.argus.intellij.jawa.lang.psi.*;
 import org.argus.jawa.core.Signature;
 
-public class JawaSignatureSymbolImpl extends ASTWrapperPsiElement implements JawaSignatureSymbol {
+public class JawaSignatureSymbolImpl extends JawaSignatureSymbolImplMixin implements JawaSignatureSymbol {
 
   public JawaSignatureSymbolImpl(ASTNode node) {
     super(node);

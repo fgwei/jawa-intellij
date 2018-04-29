@@ -177,6 +177,9 @@
 
   implements("StaticFieldNameSymbol")="org.argus.intellij.jawa.lang.psi.api.expr.JawaReferenceExpression"
   mixin("StaticFieldNameSymbol")="org.argus.intellij.jawa.lang.psi.mixins.JawaStaticFieldNameSymbolImplMixin"
+
+  implements("SignatureSymbol")="org.argus.intellij.jawa.lang.psi.api.expr.JawaReferenceExpression"
+  mixin("SignatureSymbol")="org.argus.intellij.jawa.lang.psi.mixins.JawaSignatureSymbolImplMixin"
 }
 
 CompilationUnit ::= ClassOrInterfaceDeclaration*

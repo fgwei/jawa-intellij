@@ -231,7 +231,7 @@ public class JawaVisitor extends PsiElementVisitor {
   }
 
   public void visitSignatureSymbol(@NotNull JawaSignatureSymbol o) {
-    visitPsiElement(o);
+    visitReferenceExpression(o);
   }
 
   public void visitStatement(@NotNull JawaStatement o) {
