@@ -12,7 +12,7 @@
   <id>org.argus.intellij</id>
   <name>Jawa</name>
   <description>Jawa plugin provides Jawa language support.</description>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <vendor url="http://fgwei.arguslab.org/">Argus Laboratory: Fengguo (Hugo) Wei</vendor>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->

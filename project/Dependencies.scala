@@ -34,7 +34,7 @@ object Dependencies {
   val scalaLibrary: ModuleID = "org.scala-lang" % "scala-library" % scalaVersion
   val scalaReflect: ModuleID = "org.scala-lang" % "scala-reflect" % scalaVersion
 
-  val jawa: ModuleID = "com.github.arguslab" % "jawa_2.12" % argusSafVersion
+  val jawa: ModuleID = "com.github.arguslab" %% "jawa" % argusSafVersion
 
   val nailgun: ModuleID = "org.jetbrains" % "nailgun-patched" % "1.0.0"
   val compilerInterfaceSources: ModuleID = "org.jetbrains" % "compiler-interface-sources" % "1.0.0"

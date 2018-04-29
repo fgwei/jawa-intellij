@@ -119,7 +119,11 @@ lazy val plugin_packager =
           dependencyClasspath.in(jc_plugin, Compile).value,
       mappings := {
         import Packaging.PackageEntry._
-        val librariesToCopyAsIs = DependencyGroups.jawa_plugin.filterNot(lib => lib == Dependencies.scalaLibrary)
+        val crossLibraries = List(
+          (Dependencies.jawa, "lib")
+        )
+        val librariesToCopyAsIs = DependencyGroups.jawa_plugin.filterNot(lib =>
+          crossLibraries.map(_._1).contains(lib) || lib == Dependencies.scalaLibrary)
         val jc = Seq(
           Artifact(pack.in(jc_plugin, Compile).value,
             "lib/jc/jawa-jc-plugin.jar"),
@@ -142,10 +146,11 @@ lazy val plugin_packager =
           Artifact(pack.in(nailgun_runners, Compile).value,
             "lib/jawa-nailgun-runner.jar"),
           Library(Dependencies.scalaLibrary,
-            "lib/scala-library.jar"),
-          Library(Dependencies.jawa,
-            "lib/jawa_2.12.jar")
+            "lib/scala-library.jar")
         ) ++
+        crossLibraries.map { case (clib, dir) =>
+          Library(clib.withName(s"${clib.name}_2.12"), s"$dir/${clib.name}.jar")
+        } ++
         librariesToCopyAsIs.map { lib =>
           Library(lib, s"lib/${lib.name}.jar")
         }

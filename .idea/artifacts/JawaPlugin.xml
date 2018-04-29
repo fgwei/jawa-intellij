@@ -4,7 +4,7 @@
     <properties id="ant-postprocessing">
       <options enabled="true">
         <file>file://$PROJECT_DIR$/buildutils.xml</file>
-        <target>rename.scala.library</target>
+        <target>rename.jawa</target>
       </options>
     </properties>
     <root id="root">

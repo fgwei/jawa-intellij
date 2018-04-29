@@ -58,7 +58,7 @@
     <target name="rename.jawa">
         <move todir="out/plugin/Jawa/lib">
             <fileset dir="out/plugin/Jawa/lib">
-                <include name="jawa*.jar"/>
+                <include name="jawa_*.jar"/>
             </fileset>
             <mapper type="glob" from="*" to="jawa.jar"/>
         </move>
@@ -74,5 +74,5 @@
     </target>
 
     <target name="idea.postbuild"
-            depends="rename.scala.library,rename.compiler-interface-sources,rename.incremental-compiler,rename.jline,rename.nailgun,rename.asm-all"/>
+            depends="rename.scala.library,rename.jawa,rename.compiler-interface-sources,rename.incremental-compiler,rename.jline,rename.nailgun,rename.asm-all"/>
 </project>
