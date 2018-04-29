@@ -11,6 +11,9 @@ public interface JawaAccessExpression extends PsiElement {
   JawaFieldNameSymbol getFieldNameSymbol();
 
   @NotNull
+  JawaTypeAnnotation getTypeAnnotation();
+
+  @NotNull
   JawaVarSymbol getVarSymbol();
 
 }

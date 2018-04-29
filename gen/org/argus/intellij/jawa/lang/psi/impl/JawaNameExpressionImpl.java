@@ -28,8 +28,8 @@ public class JawaNameExpressionImpl extends ASTWrapperPsiElement implements Jawa
 
   @Override
   @Nullable
-  public JawaStaticFieldNameSymbol getStaticFieldNameSymbol() {
-    return PsiTreeUtil.getChildOfType(this, JawaStaticFieldNameSymbol.class);
+  public JawaStaticFieldAccess getStaticFieldAccess() {
+    return PsiTreeUtil.getChildOfType(this, JawaStaticFieldAccess.class);
   }
 
   @Override

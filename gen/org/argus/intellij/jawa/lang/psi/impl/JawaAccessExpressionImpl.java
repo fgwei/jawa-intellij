@@ -34,6 +34,12 @@ public class JawaAccessExpressionImpl extends ASTWrapperPsiElement implements Ja
 
   @Override
   @NotNull
+  public JawaTypeAnnotation getTypeAnnotation() {
+    return notNullChild(PsiTreeUtil.getChildOfType(this, JawaTypeAnnotation.class));
+  }
+
+  @Override
+  @NotNull
   public JawaVarSymbol getVarSymbol() {
     return notNullChild(PsiTreeUtil.getChildOfType(this, JawaVarSymbol.class));
   }

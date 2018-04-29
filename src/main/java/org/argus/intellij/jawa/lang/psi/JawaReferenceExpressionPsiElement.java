@@ -16,7 +16,10 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.pom.java.LanguageLevel;
 import com.intellij.psi.*;
-import com.intellij.psi.filters.*;
+import com.intellij.psi.filters.AndFilter;
+import com.intellij.psi.filters.ConstructorFilter;
+import com.intellij.psi.filters.NotFilter;
+import com.intellij.psi.filters.OrFilter;
 import com.intellij.psi.impl.PsiClassImplUtil;
 import com.intellij.psi.impl.PsiImplUtil;
 import com.intellij.psi.impl.source.resolve.JavaResolveCache;
@@ -30,7 +33,6 @@ import com.intellij.psi.scope.MethodProcessorSetupFailedException;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.scope.processor.FilterScopeProcessor;
 import com.intellij.psi.scope.processor.MethodResolverProcessor;
-import com.intellij.psi.scope.processor.MethodsProcessor;
 import com.intellij.psi.scope.util.PsiScopesUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiUtil;
@@ -342,7 +344,25 @@ public abstract class JawaReferenceExpressionPsiElement extends JawaExpressionPs
         final JawaCallStatement methodCall = (JawaCallStatement)getParent();
         final MethodResolverProcessor processor = new MethodResolverProcessor(methodCall, containingFile);
         try {
-            setupAndRunProcessor(processor, methodCall);
+            String methodName = methodCall.getSignatureAnnotation().getSignatureSymbol().getSignature().methodName();
+            boolean isConstructor = JavaKnowledge$.MODULE$.isJawaConstructor(methodName);
+
+            JawaType jtype = methodCall.getSignatureAnnotation().getSignatureSymbol().getSignature().getClassType();
+            PsiType type = JawaTypeSystem.toPsiType(jtype, getProject(), getResolveScope());
+
+            PsiClass aClass = null;
+            if (type instanceof PsiClassType) {
+                aClass = ((PsiClassType) type).resolve();
+            }
+            if (aClass == null) {
+                throw new MethodProcessorSetupFailedException("Cant resolve class in call expression");
+            }
+            processor.setIsConstructor(isConstructor);
+            if(!isConstructor) processor.setName(methodName);
+            processor.setAccessClass(aClass);
+            processor.setArgumentList(methodCall.getArgumentList());
+            processor.obtainTypeArguments(methodCall);
+            aClass.processDeclarations(processor, ResolveState.initial(), null, methodCall);
         }
         catch (MethodProcessorSetupFailedException e) {
             return JavaResolveResult.EMPTY_ARRAY;
@@ -387,24 +407,5 @@ public abstract class JawaReferenceExpressionPsiElement extends JawaExpressionPs
             JavaResolveUtil.substituteResults(expression, result);
             return result;
         }
-    }
-
-    private static void setupAndRunProcessor(@NotNull MethodsProcessor processor,
-                                             @NotNull JawaCallStatement methodCall)
-            throws MethodProcessorSetupFailedException {
-        String methodName = methodCall.getSignatureAnnotation().getSignatureSymbol().getSignature().methodName();
-        boolean isConstructor = JavaKnowledge$.MODULE$.isJawaConstructor(methodName);
-        PsiJavaCodeReferenceElement classRef = methodCall.getTypeAnnotation().getTypeExpression().getJwType().getTypeSymbol();
-        final JavaResolveResult result = classRef.advancedResolve(false);
-        PsiClass aClass = (PsiClass)result.getElement();
-        if (aClass == null) {
-            throw new MethodProcessorSetupFailedException("Cant resolve class in call expression");
-        }
-        processor.setIsConstructor(isConstructor);
-        if(!isConstructor) processor.setName(methodName);
-        processor.setAccessClass(aClass);
-        processor.setArgumentList(methodCall.getArgumentList());
-        processor.obtainTypeArguments(methodCall);
-        aClass.processDeclarations(processor, ResolveState.initial().put(PsiSubstitutor.KEY, result.getSubstitutor()), null, methodCall);
     }
 }

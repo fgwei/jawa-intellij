@@ -185,6 +185,9 @@ public class JawaParser implements PsiParser, LightPsiParser {
     else if (t == STATEMENT) {
       r = Statement(b, 0);
     }
+    else if (t == STATIC_FIELD_ACCESS) {
+      r = StaticFieldAccess(b, 0);
+    }
     else if (t == STATIC_FIELD_DECLARATION) {
       r = StaticFieldDeclaration(b, 0);
     }
@@ -247,7 +250,7 @@ public class JawaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VarSymbol '.' FieldNameSymbol
+  // VarSymbol '.' FieldNameSymbol TypeAnnotation
   public static boolean AccessExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "AccessExpression")) return false;
     if (!nextTokenIs(b, "<access expression>", APOSTROPHE_ID, ID)) return false;
@@ -256,6 +259,7 @@ public class JawaParser implements PsiParser, LightPsiParser {
     r = VarSymbol(b, l + 1);
     r = r && consumeToken(b, DOT);
     r = r && FieldNameSymbol(b, l + 1);
+    r = r && TypeAnnotation(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -433,7 +437,7 @@ public class JawaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'call' CallLhs? MethodNameSymbol ArgClause SignatureAnnotation TypeAnnotation KindAnnotation
+  // 'call' CallLhs? MethodNameSymbol ArgClause SignatureAnnotation KindAnnotation
   public static boolean CallStatement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CallStatement")) return false;
     if (!nextTokenIs(b, CALL)) return false;
@@ -444,7 +448,6 @@ public class JawaParser implements PsiParser, LightPsiParser {
     r = r && MethodNameSymbol(b, l + 1);
     r = r && ArgClause(b, l + 1);
     r = r && SignatureAnnotation(b, l + 1);
-    r = r && TypeAnnotation(b, l + 1);
     r = r && KindAnnotation(b, l + 1);
     exit_section_(b, m, CALL_STATEMENT, r);
     return r;
@@ -1118,7 +1121,7 @@ public class JawaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'procedure' JwType MethodDefSymbol ParamClause TypeAnnotation SignatureAnnotation AccessFlagAnnotation JwBody
+  // 'procedure' JwType MethodDefSymbol ParamClause SignatureAnnotation AccessFlagAnnotation JwBody
   public static boolean MethodDeclaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodDeclaration")) return false;
     if (!nextTokenIs(b, METHOD)) return false;
@@ -1128,7 +1131,6 @@ public class JawaParser implements PsiParser, LightPsiParser {
     r = r && JwType(b, l + 1);
     r = r && MethodDefSymbol(b, l + 1);
     r = r && ParamClause(b, l + 1);
-    r = r && TypeAnnotation(b, l + 1);
     r = r && SignatureAnnotation(b, l + 1);
     r = r && AccessFlagAnnotation(b, l + 1);
     r = r && JwBody(b, l + 1);
@@ -1222,13 +1224,13 @@ public class JawaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VarSymbol|StaticFieldNameSymbol
+  // VarSymbol|StaticFieldAccess
   public static boolean NameExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "NameExpression")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, NAME_EXPRESSION, "<name expression>");
     r = VarSymbol(b, l + 1);
-    if (!r) r = StaticFieldNameSymbol(b, l + 1);
+    if (!r) r = StaticFieldAccess(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1446,6 +1448,19 @@ public class JawaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // StaticFieldNameSymbol TypeAnnotation
+  public static boolean StaticFieldAccess(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "StaticFieldAccess")) return false;
+    if (!nextTokenIs(b, STATIC_ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = StaticFieldNameSymbol(b, l + 1);
+    r = r && TypeAnnotation(b, l + 1);
+    exit_section_(b, m, STATIC_FIELD_ACCESS, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // 'global' FieldDeclaration ';'
   public static boolean StaticFieldDeclaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "StaticFieldDeclaration")) return false;
@@ -1616,26 +1631,15 @@ public class JawaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ('@owner'|'@type'|'@classDescriptor') TypeExpression
+  // '@type' TypeExpression
   public static boolean TypeAnnotation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TypeAnnotation")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, TYPE_ANNOTATION, "<type annotation>");
-    r = TypeAnnotation_0(b, l + 1);
-    r = r && TypeExpression(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // '@owner'|'@type'|'@classDescriptor'
-  private static boolean TypeAnnotation_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TypeAnnotation_0")) return false;
+    if (!nextTokenIs(b, TYPE_KEY)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, OWNER_KEY);
-    if (!r) r = consumeToken(b, TYPE_KEY);
-    if (!r) r = consumeToken(b, CLASS_DESCRIPTOR_KEY);
-    exit_section_(b, m, null, r);
+    r = consumeToken(b, TYPE_KEY);
+    r = r && TypeExpression(b, l + 1);
+    exit_section_(b, m, TYPE_ANNOTATION, r);
     return r;
   }
 

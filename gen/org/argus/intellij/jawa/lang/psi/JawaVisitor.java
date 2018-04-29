@@ -238,6 +238,10 @@ public class JawaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitStaticFieldAccess(@NotNull JawaStaticFieldAccess o) {
+    visitPsiElement(o);
+  }
+
   public void visitStaticFieldDeclaration(@NotNull JawaStaticFieldDeclaration o) {
     visitPsiElement(o);
   }

@@ -121,6 +121,7 @@ public abstract class JawaFieldDeclarationImplMixin extends JawaStubBasedPsiElem
         return getAccessFlagAnnotation().hasModifierProperty(s);
     }
 
+    @NotNull
     @Override
     public String getName() {
         return name();

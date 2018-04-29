@@ -23,7 +23,4 @@ public interface JawaCallStatement extends JawaMethodCallExpression {
   @NotNull
   JawaSignatureAnnotation getSignatureAnnotation();
 
-  @NotNull
-  JawaTypeAnnotation getTypeAnnotation();
-
 }

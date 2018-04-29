@@ -68,10 +68,4 @@ public class JawaMethodDeclarationImpl extends JawaMethodDeclarationImplMixin im
     return notNullChild(PsiTreeUtil.getChildOfType(this, JawaSignatureAnnotation.class));
   }
 
-  @Override
-  @NotNull
-  public JawaTypeAnnotation getTypeAnnotation() {
-    return notNullChild(PsiTreeUtil.getChildOfType(this, JawaTypeAnnotation.class));
-  }
-
 }

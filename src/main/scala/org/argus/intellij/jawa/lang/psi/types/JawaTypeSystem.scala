@@ -11,6 +11,7 @@
 package org.argus.intellij.jawa.lang.psi.types
 
 import com.intellij.openapi.project.Project
+import com.intellij.psi.PsiType
 import com.intellij.psi.search.GlobalSearchScope
 import org.argus.jawa.core.JawaType
 
@@ -19,9 +20,9 @@ import org.argus.jawa.core.JawaType
   */
 object JawaTypeSystem extends api.TypeSystem {
   override val name = "Jawa"
-  override lazy val bridge = JawaTypePsiTypeBridge
-  protected override lazy val presentation = JawaTypePresentation
+  override lazy val bridge: JawaTypePsiTypeBridge.type = JawaTypePsiTypeBridge
+  protected override lazy val presentation: JawaTypePresentation.type = JawaTypePresentation
 
   def toPsiType(`type`: JawaType, project: Project,
-                scope: GlobalSearchScope) = `type`.toPsiType(project, scope)
+                scope: GlobalSearchScope): PsiType = `type`.toPsiType(project, scope)
 }

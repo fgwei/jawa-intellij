@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface JawaNameExpression extends PsiElement {
 
   @Nullable
-  JawaStaticFieldNameSymbol getStaticFieldNameSymbol();
+  JawaStaticFieldAccess getStaticFieldAccess();
 
   @Nullable
   JawaVarSymbol getVarSymbol();

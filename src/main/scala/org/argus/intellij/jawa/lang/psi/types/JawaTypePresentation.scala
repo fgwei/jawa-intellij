@@ -14,5 +14,5 @@ package org.argus.intellij.jawa.lang.psi.types
   * @author <a href="mailto:fgwei521@gmail.com">Fengguo Wei</a>
   */
 object JawaTypePresentation extends api.JawaTypePresentation {
-  override implicit lazy val typeSystem = JawaTypeSystem
+  override implicit lazy val typeSystem: JawaTypeSystem.type = JawaTypeSystem
 }

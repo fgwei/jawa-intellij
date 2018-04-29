@@ -184,7 +184,7 @@ CompilationUnit ::= ClassOrInterfaceDeclaration*
 ClassOrInterfaceDeclaration ::= 'record' TypeDefSymbol KindAnnotation AccessFlagAnnotation ExtendsAndImplementsClause? InstanceFieldDeclarationBlock StaticFieldDeclaration* MethodDeclaration*
 
 Annotation ::= TypeAnnotation | SignatureAnnotation | KindAnnotation | AccessFlagAnnotation | DefaultAnnotation
-TypeAnnotation ::= ('@owner'|'@type'|'@classDescriptor') TypeExpression
+TypeAnnotation ::= '@type' TypeExpression
 SignatureAnnotation ::= '@signature' SignatureSymbol
 KindAnnotation ::= '@kind' ID
 AccessFlagAnnotation ::= '@AccessFlag' ID? {methods=[getModifiers]}
@@ -204,7 +204,7 @@ JwType ::= TypeSymbol TypeFragment* {methods=[getJawaType]}
 TypeFragment ::= '[' ']'
 TypeFragmentWithInit ::= '[' VarSymbol (',' VarSymbol)* ']'
 
-MethodDeclaration ::= 'procedure' JwType MethodDefSymbol ParamClause TypeAnnotation SignatureAnnotation AccessFlagAnnotation JwBody
+MethodDeclaration ::= 'procedure' JwType MethodDefSymbol ParamClause SignatureAnnotation AccessFlagAnnotation JwBody
 
 ParamClause ::= '(' (Param (',' Param)*)? ')'
 Param ::= JwType VarDefSymbol Annotation*
@@ -225,7 +225,7 @@ Statement ::= CallStatement
               |AssignmentStatement
               |Annotation*
 
-CallStatement ::= 'call' CallLhs? MethodNameSymbol ArgClause SignatureAnnotation TypeAnnotation KindAnnotation
+CallStatement ::= 'call' CallLhs? MethodNameSymbol ArgClause SignatureAnnotation KindAnnotation
 CallLhs ::= VarSymbol ':=' {pin=2}
 ArgClause ::= '(' (VarSymbol (',' VarSymbol)*)? ')' {pin=3}
 
@@ -265,7 +265,9 @@ Expression_Rhs ::= NewExpression
                    |BinaryExpression
                    |NameExpression
 
-NameExpression ::= VarSymbol|StaticFieldNameSymbol
+NameExpression ::= VarSymbol|StaticFieldAccess
+
+StaticFieldAccess ::= StaticFieldNameSymbol TypeAnnotation
 
 NewExpression ::= 'new' TypeSymbol TypeFragmentWithInit*
 
@@ -295,7 +297,7 @@ private unary_op ::= '-' | '~'
 
 UnaryExpression ::= unary_op VarSymbol
 
-AccessExpression ::= VarSymbol '.' FieldNameSymbol
+AccessExpression ::= VarSymbol '.' FieldNameSymbol TypeAnnotation
 
 IndexingExpression ::= VarSymbol '[' (VarSymbol|NUMBER_LITERAL) ']' {pin=2}
 

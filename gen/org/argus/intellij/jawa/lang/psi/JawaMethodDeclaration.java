@@ -28,7 +28,4 @@ public interface JawaMethodDeclaration extends JawaPsiMethod, StubBasedPsiElemen
   @NotNull
   JawaSignatureAnnotation getSignatureAnnotation();
 
-  @NotNull
-  JawaTypeAnnotation getTypeAnnotation();
-
 }

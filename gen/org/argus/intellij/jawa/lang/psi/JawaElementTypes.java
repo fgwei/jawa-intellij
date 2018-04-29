@@ -63,6 +63,7 @@ public interface JawaElementTypes {
   IElementType SIGNATURE_ANNOTATION = JawaElementTypeFactory.getElementType("SIGNATURE_ANNOTATION");
   IElementType SIGNATURE_SYMBOL = JawaElementTypeFactory.getElementType("SIGNATURE_SYMBOL");
   IElementType STATEMENT = JawaElementTypeFactory.getElementType("STATEMENT");
+  IElementType STATIC_FIELD_ACCESS = JawaElementTypeFactory.getElementType("STATIC_FIELD_ACCESS");
   IElementType STATIC_FIELD_DECLARATION = JawaElementTypeFactory.getElementType("STATIC_FIELD_DECLARATION");
   IElementType STATIC_FIELD_DEF_SYMBOL = JawaElementTypeFactory.getElementType("STATIC_FIELD_DEF_SYMBOL");
   IElementType STATIC_FIELD_NAME_SYMBOL = JawaElementTypeFactory.getElementType("STATIC_FIELD_NAME_SYMBOL");
@@ -320,6 +321,9 @@ public interface JawaElementTypes {
       }
       else if (type == STATEMENT) {
         return new JawaStatementImpl(node);
+      }
+      else if (type == STATIC_FIELD_ACCESS) {
+        return new JawaStaticFieldAccessImpl(node);
       }
       else if (type == STATIC_FIELD_DECLARATION) {
         return new JawaStaticFieldDeclarationImpl(node);

@@ -56,10 +56,4 @@ public class JawaCallStatementImpl extends JawaCallStatementImplMixin implements
     return notNullChild(PsiTreeUtil.getChildOfType(this, JawaSignatureAnnotation.class));
   }
 
-  @Override
-  @NotNull
-  public JawaTypeAnnotation getTypeAnnotation() {
-    return notNullChild(PsiTreeUtil.getChildOfType(this, JawaTypeAnnotation.class));
-  }
-
 }
