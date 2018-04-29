@@ -278,7 +278,7 @@ CMP ::= 'fcmpl' | 'fcmpg' | 'dcmpl' | 'dcmpg' | 'lcmp'
 
 CmpExpression ::= CMP '(' VarSymbol ',' VarSymbol ')'
 
-ExceptionExpression ::= 'Exception'
+ExceptionExpression ::= 'Exception' TypeAnnotation KindAnnotation
 
 ConstClassExpression ::= 'constclass' TypeAnnotation
 

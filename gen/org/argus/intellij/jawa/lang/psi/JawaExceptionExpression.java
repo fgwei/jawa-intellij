@@ -7,4 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface JawaExceptionExpression extends PsiElement {
 
+  @NotNull
+  JawaKindAnnotation getKindAnnotation();
+
+  @NotNull
+  JawaTypeAnnotation getTypeAnnotation();
+
 }

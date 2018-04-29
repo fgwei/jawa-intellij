@@ -26,4 +26,16 @@ public class JawaExceptionExpressionImpl extends ASTWrapperPsiElement implements
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public JawaKindAnnotation getKindAnnotation() {
+    return notNullChild(PsiTreeUtil.getChildOfType(this, JawaKindAnnotation.class));
+  }
+
+  @Override
+  @NotNull
+  public JawaTypeAnnotation getTypeAnnotation() {
+    return notNullChild(PsiTreeUtil.getChildOfType(this, JawaTypeAnnotation.class));
+  }
+
 }

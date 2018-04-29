@@ -659,13 +659,15 @@ public class JawaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'Exception'
+  // 'Exception' TypeAnnotation KindAnnotation
   public static boolean ExceptionExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ExceptionExpression")) return false;
     if (!nextTokenIs(b, EXCEPTION)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, EXCEPTION);
+    r = r && TypeAnnotation(b, l + 1);
+    r = r && KindAnnotation(b, l + 1);
     exit_section_(b, m, EXCEPTION_EXPRESSION, r);
     return r;
   }
